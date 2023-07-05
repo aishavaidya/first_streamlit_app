@@ -2,6 +2,7 @@ import streamlit
 import pandas
 import requests
 import snowflake.connector
+from urllib.error import urlError
 
 streamlit.title('Hello this is first streamlit app')
 streamlit.header('Breakfast Menu')
@@ -40,6 +41,7 @@ fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # write your own comment - what does this do?
 streamlit.dataframe(fruityvice_normalized)
 
+streamlit.stop()
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
@@ -54,8 +56,21 @@ my_data_row = my_cur.fetchall()
 streamlit.dataframe(my_data_row)
 #streamlit.text("Hello from Snowflake:")
 
-add_fruit= streamlit.text_input('What fruit would you like information about?')
-# my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values(add_fruit)")
+try:
+  add_fruit= streamlit.text_input('What fruit would you like information about?')
+  # my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values(add_fruit)")
+if not fruit_choice:
+  streamlit.error("please select fruit to get information")
+else:
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  # write your own comment - what does this do?
+  streamlit.dataframe(fruityvice_normalized)
+except URLError as e:
+  streamlit.error()
+
+
+  
 streamlit.write('Thankyou for adding',add_fruit)
 
 my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values('from streamlit')") 
