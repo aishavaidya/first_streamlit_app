@@ -54,3 +54,5 @@ my_data_row = my_cur.fetchall()
 streamlit.dataframe(my_data_row)
 #streamlit.text("Hello from Snowflake:")
 
+add_fruit= streamlit.text_input('What fruit would you like information about?')
+streamlit.write('The user entered ', add_fruit)
