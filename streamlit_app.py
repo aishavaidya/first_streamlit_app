@@ -52,8 +52,8 @@ streamlit.text("Fruit load list contains")
 streamlit.text(my_data_row)
 
 #streamlit.text(my_data_row)
-my_data_row = my_cur.fetchall()
-streamlit.dataframe(my_data_row)
+# my_data_row = my_cur.fetchall()
+# streamlit.dataframe(my_data_row)
 #streamlit.text("Hello from Snowflake:")
 
 streamlit.header("Fruityvice Fruit Advice!")
