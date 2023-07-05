@@ -57,7 +57,7 @@ streamlit.dataframe(my_data_row)
 #streamlit.text("Hello from Snowflake:")
 
 try:
-  add_fruit= streamlit.text_input('What fruit would you like information about?')
+  fruit_choice= streamlit.text_input('What fruit would you like information about?')
   # my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values(add_fruit)")
   if not fruit_choice:
     streamlit.error("please select fruit to get information")
